@@ -116,3 +116,14 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: paper_scout_summary
+    description: "Trích nhanh Method/Results từ paper_text (excerpt)."
+    parameters:
+      type: object
+      properties:
+        paper_text: {type: string, default: "", description: "Text excerpt từ paper (thường từ paper_text.items[0].summary)"}
+        arxiv_id: {type: string, default: "", description: "arXiv ID (ví dụ 1706.03762), dùng để gắn ngữ cảnh"}
+        title: {type: string, default: "", description: "Title của paper (optional)"}
+        max_bullets: {type: integer, default: 5, description: "Số bullet tối đa cho mỗi phần"}
+      required: [paper_text]
