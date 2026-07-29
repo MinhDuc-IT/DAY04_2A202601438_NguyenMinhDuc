@@ -3,5 +3,165 @@
   "dataset_role": "group",
   "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "P01_discovery_topic_papers_plus_clarify",
+      "phase": "B",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {"name": "papers", "args": {"max_results": 3}},
+          {"name": "clarify", "args": {"response_type": "text"}}
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Discovery theo topic: gọi papers với max_results đúng và hỏi user chọn arXiv để đọc."
+      },
+      "query": "Tìm 3 paper arXiv về retrieval augmented generation evaluation."
+    },
+    {
+      "id": "P02_read_known_arxiv_id_extract_methods_results",
+      "phase": "B",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "paper_text", "args": {"arxiv_url": "1706.03762"}},
+          {"name": "paper_scout_summary", "args": {"arxiv_id": "1706.03762"}}
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "User cung cấp arXiv id: gọi paper_text rồi trích method/results bằng tool mới."
+      },
+      "query": "Tóm tắt method và results của arXiv 1706.03762."
+    },
+    {
+      "id": "P03_missing_arxiv_id_should_clarify",
+      "phase": "B",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {"name": "clarify", "args": {"response_type": "text"}}
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Thiếu arXiv id/url khi yêu cầu đọc/summarize: phải hỏi lại bằng clarify."
+      },
+      "query": "Tóm tắt method/results của paper này giúp mình."
+    },
+    {
+      "id": "P04_discovery_rlhf_then_clarify_pick_paper",
+      "phase": "B",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {"name": "papers", "args": {"max_results": 3}},
+          {"name": "clarify", "args": {"response_type": "text"}}
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Discovery + boundary: chỉ search papers theo topic và hỏi user chọn paper trước khi đọc full text."
+      },
+      "query": "Tìm 3 paper arXiv về reinforcement learning from human feedback và hỏi mình chọn paper để đọc full text."
+    },
+    {
+      "id": "P05_out_of_scope_no_tool",
+      "phase": "B",
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true},
+      "metadata": {
+        "what_it_tests": "Câu hỏi out-of-scope không được gọi tool."
+      },
+      "query": "Viết hàm Python tính Fibonacci bằng recursion."
+    },
+    {
+      "id": "M06_multiturn_discovery_then_read_with_provided_id",
+      "phase": "B",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "paper_text", "args": {"arxiv_url": "1706.03762"}},
+          {"name": "paper_scout_summary", "args": {"arxiv_id": "1706.03762"}}
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: context discovery + user cung cấp arXiv id ở turn sau -> latest turn đọc & trích method/results."
+      },
+      "turns": [
+        {"role": "user", "content": "Tìm paper arXiv về machine translation evaluation."},
+        {"role": "user", "content": "Ok, mình chọn arXiv 1706.03762."},
+        {"role": "user", "content": "Giờ hãy trích method/results của paper đã chọn."}
+      ]
+    },
+    {
+      "id": "M07_multiturn_missing_id_then_provide_id",
+      "phase": "B",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {"name": "paper_text", "args": {"arxiv_url": "2005.14165"}},
+          {"name": "paper_scout_summary", "args": {"arxiv_id": "2005.14165"}}
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: user thiếu arXiv id ở turn trước, cung cấp ở turn sau -> latest turn gọi paper_text + summarize."
+      },
+      "turns": [
+        {"role": "user", "content": "Tóm tắt method/results của paper arXiv đi."},
+        {"role": "user", "content": "Mình quên chưa cung cấp id, đây là 2005.14165."},
+        {"role": "user", "content": "Trích method/results từ arXiv 2005.14165."}
+      ]
+    },
+    {
+      "id": "M08_multiturn_correction_arxiv_id",
+      "phase": "B",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {"name": "paper_text", "args": {"arxiv_url": "2005.14165"}},
+          {"name": "paper_scout_summary", "args": {"arxiv_id": "2005.14165"}}
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: user đổi arXiv id -> latest turn phải đọc đúng id mới."
+      },
+      "turns": [
+        {"role": "user", "content": "Tóm tắt method/results của arXiv 1706.03762."},
+        {"role": "user", "content": "À nhầm, đổi sang arXiv 2005.14165."},
+        {"role": "user", "content": "Đúng rồi, trích method/results của arXiv mới."}
+      ]
+    },
+    {
+      "id": "M09_multiturn_carryover_max_bullets",
+      "phase": "B",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {"name": "paper_text", "args": {"arxiv_url": "1810.04805"}},
+          {"name": "paper_scout_summary", "args": {"arxiv_id": "1810.04805", "max_bullets": 3}}
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: carryover yêu cầu 'chỉ lấy 3 bullet' -> latest turn truyền max_bullets=3 khi summarize."
+      },
+      "turns": [
+        {"role": "user", "content": "Tìm paper arXiv về diffusion models."},
+        {"role": "user", "content": "Đọc paper và chỉ lấy 3 bullet method/results."},
+        {"role": "user", "content": "Paper id: 1810.04805. Trích method/results chỉ 3 bullet."}
+      ]
+    },
+    {
+      "id": "M10_multiturn_out_of_scope_no_tool",
+      "phase": "B",
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true},
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest turn out-of-scope -> không gọi tool."
+      },
+      "turns": [
+        {"role": "user", "content": "Tìm paper arXiv về sleeping disorders."},
+        {"role": "user", "content": "Tại sao con người lại ngủ?"},
+        {"role": "user", "content": "Giải thích khoa học về giấc ngủ."}
+      ]
+    }
+  ]
 }
