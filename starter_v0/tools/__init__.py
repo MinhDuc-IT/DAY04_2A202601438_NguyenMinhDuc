@@ -17,6 +17,9 @@ from .policy.tool import search_company_policy
 from .social_search.tool import search_tweets
 from .send.tool import send_telegram
 from .lookup.tool import web_search
+from .paper_summary.tool import summarize_paper
+from .compare_papers.tool import compare_papers
+from .extract_paper_insights.tool import extract_paper_insights
 
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
@@ -35,6 +38,9 @@ TOOL_FUNCTIONS = {
     "policy": search_company_policy,
     "papers": arxiv_search,
     "paper_text": get_arxiv_paper_text,
+    "paper_summary": summarize_paper,
+    "compare_papers": compare_papers,
+    "extract_paper_insights": extract_paper_insights,
 }
 
 
