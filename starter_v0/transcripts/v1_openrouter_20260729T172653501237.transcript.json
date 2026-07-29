@@ -1,0 +1,285 @@
+{
+  "transcript_id": "v1_openrouter_20260729T172653501237",
+  "version": "v1",
+  "artifact_version": "v1+p84c707a74a04+t8761a3dfd1a7",
+  "prompt_hash": "84c707a74a04bb461294b04e1915c77b677fe94bdcda953a369d041f39c1a091",
+  "tools_hash": "8761a3dfd1a71dce89f3cafae1a43183d5d121969438cd6956d8fcdda000b163",
+  "version_label": "v1",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "H:\\MinhDuc\\Coding\\VinAI\\Lab\\Day04\\DAY04_2A202601438_NguyenMinhDuc\\starter_v0\\artifacts\\versions\\v1\\system_prompt.md",
+  "tools": "H:\\MinhDuc\\Coding\\VinAI\\Lab\\Day04\\DAY04_2A202601438_NguyenMinhDuc\\starter_v0\\artifacts\\versions\\v1\\tools.yaml",
+  "history_window": 0,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T17:27:06",
+  "updated_at": "2026-07-29T17:27:06",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T17:26:53",
+      "user": "Find 3 arXiv papers about retrieval augmented generation evaluation, then read one paper and summarize method/results.",
+      "status": "answered",
+      "assistant_text": "I found three arXiv papers related to retrieval augmented generation evaluation:\n\n1. **[Ragas: Automated Evaluation of Retrieval Augmented Generation](https://arxiv.org/abs/2309.15217v2)**  \n   - **Authors**: Shahul Es, Jithin James, Luis Espinosa-Anke, Steven Schockaert  \n   - **Summary**: This paper introduces Ragas, a framework for reference-free evaluation of Retrieval Augmented Generation (RAG) pipelines. It addresses the challenges of evaluating RAG architectures by proposing a suite of metrics that do not rely on ground truth human annotations.\n\n2. **[Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation](https://arxiv.org/abs/2411.18583v1)**  \n   - **Authors**: Nurshat Fateh Ali, Md. Mahdi Mohtasim, Shakil Mosharrof, T. Gopi Krishna  \n   - **Summary**: This research compares various approaches to automate literature review generation using NLP techniques and RAG with LLMs. It evaluates the effectiveness of different methods, including GPT-3.5-turbo, and reports ROUGE scores for the systems developed.\n\n3. **[Engineering the RAG Stack: A Comprehensive Review of the Architecture and Trust Frameworks for Retrieval-Augmented Generation Systems](https://arxiv.org/abs/2601.05264v1)**  \n   - **Authors**: Dean Wampler, Dave Nielson, Alireza Seddighi  \n   - **Summary**: This article provides a systematic literature review of RAG architectures, offering a practical guide and overview of modern methodologies, assessment frameworks, and implications for trust and alignment.\n\n### Summary of the First Paper: Ragas\n\n- **Abstract**: The paper introduces Ragas, a framework designed for the evaluation of RAG systems, which combine retrieval and language model generation. It highlights the challenges in evaluating these systems, such as assessing the retrieval system's ability to find relevant passages and the language model's capacity to utilize these passages effectively. The authors propose metrics that allow for evaluation without needing human annotations, aiming to speed up evaluation cycles in light of the rapid adoption of LLMs.\n\n- **Methodology**: The paper discusses various automated evaluation methods for text generation systems, including sampling multiple answers to assess factual stability and using LLMs to evaluate aspects like fluency. It critiques existing methods that rely on reference answers and suggests that Ragas can provide a more efficient evaluation framework.\n\n- **Results**: The authors argue that Ragas can significantly enhance the evaluation process for RAG architectures, making it faster and more reliable, especially as LLMs become more prevalent.\n\nFor more details, you can access the full paper [here](https://arxiv.org/abs/2309.15217v2).",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "papers",
+              "args": {
+                "query": "retrieval augmented generation evaluation",
+                "max_results": 3
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "papers",
+              "args": {
+                "query": "retrieval augmented generation evaluation",
+                "max_results": 3
+              },
+              "result": {
+                "tool": "arxiv_search",
+                "query": "retrieval augmented generation evaluation",
+                "api_query": "all:retrieval AND all:augmented AND all:generation AND all:evaluation",
+                "total_results": 3610,
+                "items": [
+                  {
+                    "arxiv_id": "2309.15217v2",
+                    "title": "Ragas: Automated Evaluation of Retrieval Augmented Generation",
+                    "summary": "We introduce Ragas (Retrieval Augmented Generation Assessment), a framework for reference-free evaluation of Retrieval Augmented Generation (RAG) pipelines. RAG systems are composed of a retrieval and an LLM based generation module, and provide LLMs with knowledge from a reference textual database, which enables them to act as a natural language layer between a user and textual databases, reducing the risk of hallucinations. Evaluating RAG architectures is, however, challenging because there are several dimensions to consider: the ability of the retrieval system to identify relevant and focused context passages, the ability of the LLM to exploit such passages in a faithful way, or the quality of the generation itself. With Ragas, we put forward a suite of metrics which can be used to evaluate these different dimensions \\textit{without having to rely on ground truth human annotations}. We posit that such a framework can crucially contribute to faster evaluation cycles of RAG architectures, which is especially important given the fast adoption of LLMs.",
+                    "authors": [
+                      "Shahul Es",
+                      "Jithin James",
+                      "Luis Espinosa-Anke",
+                      "Steven Schockaert"
+                    ],
+                    "published": "2023-09-26T19:23:54Z",
+                    "updated": "2025-04-28T05:09:12Z",
+                    "url": "http://arxiv.org/abs/2309.15217v2",
+                    "pdf_url": "https://arxiv.org/pdf/2309.15217v2",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CL",
+                    "categories": [
+                      "cs.CL"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2411.18583v1",
+                    "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+                    "summary": "This research presents and compares multiple approaches to automate the generation of literature reviews using several Natural Language Processing (NLP) techniques and retrieval-augmented generation (RAG) with a Large Language Model (LLM). The ever-increasing number of research articles provides a huge challenge for manual literature review. It has resulted in an increased demand for automation. Developing a system capable of automatically generating the literature reviews from only the PDF files as input is the primary objective of this research work. The effectiveness of several Natural Language Processing (NLP) strategies, such as the frequency-based method (spaCy), the transformer model (Simple T5), and retrieval-augmented generation (RAG) with Large Language Model (GPT-3.5-turbo), is evaluated to meet the primary objective. The SciTLDR dataset is chosen for this research experiment and three distinct techniques are utilized to implement three different systems for auto-generating the literature reviews. The ROUGE scores are used for the evaluation of all three systems. Based on the evaluation, the Large Language Model GPT-3.5-turbo achieved the highest ROUGE-1 score, 0.364. The transformer model comes in second place and spaCy is at the last position. Finally, a graphical user interface is created for the best system based on the large language model.",
+                    "authors": [
+                      "Nurshat Fateh Ali",
+                      "Md. Mahdi Mohtasim",
+                      "Shakil Mosharrof",
+                      "T. Gopi Krishna"
+                    ],
+                    "published": "2024-11-27T18:27:07Z",
+                    "updated": "2024-11-27T18:27:07Z",
+                    "url": "http://arxiv.org/abs/2411.18583v1",
+                    "pdf_url": "https://arxiv.org/pdf/2411.18583v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CL",
+                    "categories": [
+                      "cs.CL",
+                      "cs.AI",
+                      "cs.IR",
+                      "cs.LG"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2601.05264v1",
+                    "title": "Engineering the RAG Stack: A Comprehensive Review of the Architecture and Trust Frameworks for Retrieval-Augmented Generation Systems",
+                    "summary": "This article provides a comprehensive systematic literature review of academic studies, industrial applications, and real-world deployments from 2018 to 2025, providing a practical guide and detailed overview of modern Retrieval-Augmented Generation (RAG) architectures. RAG offers a modular approach for integrating external knowledge without increasing the capacity of the model as LLM systems expand. Research and engineering practices have been fragmented as a result of the increasing diversity of RAG methodologies, which encompasses a variety of fusion mechanisms, retrieval strategies, and orchestration approaches. We provide quantitative assessment frameworks, analyze the implications for trust and alignment, and systematically consolidate existing RAG techniques into a unified taxonomy. This document is a practical framework for the deployment of resilient, secure, and domain-adaptable RAG systems, synthesizing insights from academic literature, industry reports, and technical implementation guides. It also functions as a technical reference.",
+                    "authors": [
+                      "Dean Wampler",
+                      "Dave Nielson",
+                      "Alireza Seddighi"
+                    ],
+                    "published": "2025-11-07T16:26:29Z",
+                    "updated": "2025-11-07T16:26:29Z",
+                    "url": "http://arxiv.org/abs/2601.05264v1",
+                    "pdf_url": "https://arxiv.org/pdf/2601.05264v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.IR",
+                    "categories": [
+                      "cs.IR",
+                      "cs.AI"
+                    ]
+                  }
+                ],
+                "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "paper_summary",
+              "args": {
+                "arxiv_url": "2309.15217v2",
+                "focus_area": "all",
+                "length": "detailed"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "paper_summary",
+              "args": {
+                "arxiv_url": "2309.15217v2",
+                "focus_area": "all",
+                "length": "detailed"
+              },
+              "result": {
+                "tool": "paper_summary",
+                "arxiv_id": "2309.15217v2",
+                "url": "https://arxiv.org/abs/2309.15217v2",
+                "pdf_url": "https://arxiv.org/pdf/2309.15217v2.pdf",
+                "focus_area": "all",
+                "length": "detailed",
+                "sections_found": [
+                  "abstract",
+                  "methodology",
+                  "results",
+                  "conclusion"
+                ],
+                "items": [
+                  {
+                    "title": "Summary of arXiv paper 2309.15217v2",
+                    "url": "https://arxiv.org/abs/2309.15217v2",
+                    "source": "arxiv.org",
+                    "summary": "## ABSTRACT\nWe introduce Ragas (Retrieval Augmented\nGeneration Assessment), a framework for\nreference-free evaluation of Retrieval Aug-\nmented Generation (RAG) pipelines. RAG\nsystems are composed of a retrieval and an\nLLM based generation module, and provide\nLLMs with knowledge from a reference textual\ndatabase, which enables them to act as a natu-\nral language layer between a user and textual\ndatabases, reducing the risk of hallucinations.\nEvaluating RAG architectures is, however, chal-\nlenging because there are several dimensions to\nconsider: the ability of the retrieval system to\nidentify relevant and focused context passages,\nthe ability of the LLM to exploit such passages\nin a faithful way, or the quality of the genera-\ntion itself. With Ragas, we put forward a suite\nof metrics which can be used to evaluate these\ndifferent dimensions without having to rely on\nground truth human annotations. We posit that\nsuch a framework can crucially contribute to\nfaster evaluation cycles of RAG architectures,\nwhich is especially important given the fast\nadoption of LLMs.\n\n## METHODOLOGY\nperforms well, the need to access the hidden states\nof the model makes it unsuitable for systems that\naccess LLMs through an API.\nFor models that do not provide access to token\nprobabilities, such as ChatGPT and GPT-4, differ-\nent methods are needed. SelfCheckGPT (Manakul\net al., 2023) addresses this problem by instead sam-\npling multiple answers. Their core idea is that\nfactual answers are more stable: when an answer is\nfactual, we can expect that different samples will\ntend to be semantically similar, whereas this is less\nlikely to be the case for hallucinated answers.\nAutomated evaluation of text generation systems\nLLMs have also been leveraged to automatically\nevaluate other aspects of generated text fragments,\nbeyond factuality. For instance, GPTScore (Fu\net al., 2023) uses a prompt that specifies the consid-\nered aspect (e.g. fluency) and then scores passages\nbased on the average probability of the generated\ntokens, according to a given autoregressive LM.\nThis idea of using prompts was previously also\nconsidered by Yuan et al. (2021), although they\nused a smaller fine-tuned LM (i.e. BART) and did\nnot observe a clear benefit from using prompts. An-\nother approach directly asks ChatGPT to evaluate\na particular aspect of the given answer by provid-\ning a score between 0 and 100, or by providing a\nrating on a 5-star scale (Wang et al., 2023a). Re-\nmarkably, strong results can be obtained in this\nway, although it comes with the limitation of being\nsensitive to the design of the prompt. Rather than\nscoring individual answers, some authors have also\nfocused on using an LLM to select the best answer\namong a number of candidates (Wang et al., 2023b),\ntypically to compare the performance of different\nLLMs. However, care is needed with this approach,\nas the order in which the answers is presented can\ninfluence the result (Wang et al., 2023b).\nIn terms of how ground truth answers or, more\ngenerally, generations, have been typically used\nin the literature, most approaches have relied on\nthe availability of one or more reference answers.\nFor instance, BERTScore (Zhang et al., 2020)\nand MoverScore (Zhao et al., 2019) use contex-\ntualised embeddings, produced by a pre-trained\nBERT model, to compare the similarity between\nthe generated answer and the reference answers.\nBARTScore (Yuan et al., 2021) similarly uses refer-\nence answers to compute aspects such as precision\n(estimated as the probability of generating the gen-\nerated answer given the reference) and recall (esti-\nmated as the probability of generating the reference\ngiven the generated answer).\n\n## RESULTS\nof Retrieval Augmented Generation\nShahul Es†, Jithin James †, Luis Espinosa-Anke ∗♢, Steven Schockaert ∗\n†Exploding Gradients\n∗CardiffNLP, Cardiff University, United Kingdom\n♢AMPLYFI, United Kingdom\nshahules786@gmail.com,jamesjithin97@gmail.com\n{espinosa-ankel,schockaerts1}@cardiff.ac.uk\nAbstract\nWe introduce Ragas (Retrieval Augmented\nGeneration Assessment), a framework for\nreference-free evaluation of Retrieval Aug-\nmented Generation (RAG) pipelines. RAG\nsystems are composed of a retrieval and an\nLLM based generation module, and provide\nLLMs with knowledge from a reference textual\ndatabase, which enables them to act as a natu-\nral language layer between a user and textual\ndatabases, reducing the risk of hallucinations.\nEvaluating RAG architectures is, however, chal-\nlenging because there are several dimensions to\nconsider: the ability of the retrieval system to\nidentify relevant and focused context passages,\nthe ability of the LLM to exploit such passages\nin a faithful way, or the quality of the genera-\ntion itself. With Ragas, we put forward a suite\nof metrics which can be used to evaluate these\ndifferent dimensions without having to rely on\nground truth human annotations. We posit that\nsuch a framework can crucially contribute to\nfaster evaluation cycles of RAG architectures,\nwhich is especially important given the fast\nadoption of LLMs."
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "assistant_text": "I found three arXiv papers related to retrieval augmented generation evaluation:\n\n1. **[Ragas: Automated Evaluation of Retrieval Augmented Generation](https://arxiv.org/abs/2309.15217v2)**  \n   - **Authors**: Shahul Es, Jithin James, Luis Espinosa-Anke, Steven Schockaert  \n   - **Summary**: This paper introduces Ragas, a framework for reference-free evaluation of Retrieval Augmented Generation (RAG) pipelines. It addresses the challenges of evaluating RAG architectures by proposing a suite of metrics that do not rely on ground truth human annotations.\n\n2. **[Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation](https://arxiv.org/abs/2411.18583v1)**  \n   - **Authors**: Nurshat Fateh Ali, Md. Mahdi Mohtasim, Shakil Mosharrof, T. Gopi Krishna  \n   - **Summary**: This research compares various approaches to automate literature review generation using NLP techniques and RAG with LLMs. It evaluates the effectiveness of different methods, including GPT-3.5-turbo, and reports ROUGE scores for the systems developed.\n\n3. **[Engineering the RAG Stack: A Comprehensive Review of the Architecture and Trust Frameworks for Retrieval-Augmented Generation Systems](https://arxiv.org/abs/2601.05264v1)**  \n   - **Authors**: Dean Wampler, Dave Nielson, Alireza Seddighi  \n   - **Summary**: This article provides a systematic literature review of RAG architectures, offering a practical guide and overview of modern methodologies, assessment frameworks, and implications for trust and alignment.\n\n### Summary of the First Paper: Ragas\n\n- **Abstract**: The paper introduces Ragas, a framework designed for the evaluation of RAG systems, which combine retrieval and language model generation. It highlights the challenges in evaluating these systems, such as assessing the retrieval system's ability to find relevant passages and the language model's capacity to utilize these passages effectively. The authors propose metrics that allow for evaluation without needing human annotations, aiming to speed up evaluation cycles in light of the rapid adoption of LLMs.\n\n- **Methodology**: The paper discusses various automated evaluation methods for text generation systems, including sampling multiple answers to assess factual stability and using LLMs to evaluate aspects like fluency. It critiques existing methods that rely on reference answers and suggests that Ragas can provide a more efficient evaluation framework.\n\n- **Results**: The authors argue that Ragas can significantly enhance the evaluation process for RAG architectures, making it faster and more reliable, especially as LLMs become more prevalent.\n\nFor more details, you can access the full paper [here](https://arxiv.org/abs/2309.15217v2).",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "retrieval augmented generation evaluation",
+            "max_results": 3
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "retrieval augmented generation evaluation",
+            "api_query": "all:retrieval AND all:augmented AND all:generation AND all:evaluation",
+            "total_results": 3610,
+            "items": [
+              {
+                "arxiv_id": "2309.15217v2",
+                "title": "Ragas: Automated Evaluation of Retrieval Augmented Generation",
+                "summary": "We introduce Ragas (Retrieval Augmented Generation Assessment), a framework for reference-free evaluation of Retrieval Augmented Generation (RAG) pipelines. RAG systems are composed of a retrieval and an LLM based generation module, and provide LLMs with knowledge from a reference textual database, which enables them to act as a natural language layer between a user and textual databases, reducing the risk of hallucinations. Evaluating RAG architectures is, however, challenging because there are several dimensions to consider: the ability of the retrieval system to identify relevant and focused context passages, the ability of the LLM to exploit such passages in a faithful way, or the quality of the generation itself. With Ragas, we put forward a suite of metrics which can be used to evaluate these different dimensions \\textit{without having to rely on ground truth human annotations}. We posit that such a framework can crucially contribute to faster evaluation cycles of RAG architectures, which is especially important given the fast adoption of LLMs.",
+                "authors": [
+                  "Shahul Es",
+                  "Jithin James",
+                  "Luis Espinosa-Anke",
+                  "Steven Schockaert"
+                ],
+                "published": "2023-09-26T19:23:54Z",
+                "updated": "2025-04-28T05:09:12Z",
+                "url": "http://arxiv.org/abs/2309.15217v2",
+                "pdf_url": "https://arxiv.org/pdf/2309.15217v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2411.18583v1",
+                "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+                "summary": "This research presents and compares multiple approaches to automate the generation of literature reviews using several Natural Language Processing (NLP) techniques and retrieval-augmented generation (RAG) with a Large Language Model (LLM). The ever-increasing number of research articles provides a huge challenge for manual literature review. It has resulted in an increased demand for automation. Developing a system capable of automatically generating the literature reviews from only the PDF files as input is the primary objective of this research work. The effectiveness of several Natural Language Processing (NLP) strategies, such as the frequency-based method (spaCy), the transformer model (Simple T5), and retrieval-augmented generation (RAG) with Large Language Model (GPT-3.5-turbo), is evaluated to meet the primary objective. The SciTLDR dataset is chosen for this research experiment and three distinct techniques are utilized to implement three different systems for auto-generating the literature reviews. The ROUGE scores are used for the evaluation of all three systems. Based on the evaluation, the Large Language Model GPT-3.5-turbo achieved the highest ROUGE-1 score, 0.364. The transformer model comes in second place and spaCy is at the last position. Finally, a graphical user interface is created for the best system based on the large language model.",
+                "authors": [
+                  "Nurshat Fateh Ali",
+                  "Md. Mahdi Mohtasim",
+                  "Shakil Mosharrof",
+                  "T. Gopi Krishna"
+                ],
+                "published": "2024-11-27T18:27:07Z",
+                "updated": "2024-11-27T18:27:07Z",
+                "url": "http://arxiv.org/abs/2411.18583v1",
+                "pdf_url": "https://arxiv.org/pdf/2411.18583v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL",
+                  "cs.AI",
+                  "cs.IR",
+                  "cs.LG"
+                ]
+              },
+              {
+                "arxiv_id": "2601.05264v1",
+                "title": "Engineering the RAG Stack: A Comprehensive Review of the Architecture and Trust Frameworks for Retrieval-Augmented Generation Systems",
+                "summary": "This article provides a comprehensive systematic literature review of academic studies, industrial applications, and real-world deployments from 2018 to 2025, providing a practical guide and detailed overview of modern Retrieval-Augmented Generation (RAG) architectures. RAG offers a modular approach for integrating external knowledge without increasing the capacity of the model as LLM systems expand. Research and engineering practices have been fragmented as a result of the increasing diversity of RAG methodologies, which encompasses a variety of fusion mechanisms, retrieval strategies, and orchestration approaches. We provide quantitative assessment frameworks, analyze the implications for trust and alignment, and systematically consolidate existing RAG techniques into a unified taxonomy. This document is a practical framework for the deployment of resilient, secure, and domain-adaptable RAG systems, synthesizing insights from academic literature, industry reports, and technical implementation guides. It also functions as a technical reference.",
+                "authors": [
+                  "Dean Wampler",
+                  "Dave Nielson",
+                  "Alireza Seddighi"
+                ],
+                "published": "2025-11-07T16:26:29Z",
+                "updated": "2025-11-07T16:26:29Z",
+                "url": "http://arxiv.org/abs/2601.05264v1",
+                "pdf_url": "https://arxiv.org/pdf/2601.05264v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.IR",
+                "categories": [
+                  "cs.IR",
+                  "cs.AI"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        },
+        {
+          "tool": "paper_summary",
+          "args": {
+            "arxiv_url": "2309.15217v2",
+            "focus_area": "all",
+            "length": "detailed"
+          },
+          "result": {
+            "tool": "paper_summary",
+            "arxiv_id": "2309.15217v2",
+            "url": "https://arxiv.org/abs/2309.15217v2",
+            "pdf_url": "https://arxiv.org/pdf/2309.15217v2.pdf",
+            "focus_area": "all",
+            "length": "detailed",
+            "sections_found": [
+              "abstract",
+              "methodology",
+              "results",
+              "conclusion"
+            ],
+            "items": [
+              {
+                "title": "Summary of arXiv paper 2309.15217v2",
+                "url": "https://arxiv.org/abs/2309.15217v2",
+                "source": "arxiv.org",
+                "summary": "## ABSTRACT\nWe introduce Ragas (Retrieval Augmented\nGeneration Assessment), a framework for\nreference-free evaluation of Retrieval Aug-\nmented Generation (RAG) pipelines. RAG\nsystems are composed of a retrieval and an\nLLM based generation module, and provide\nLLMs with knowledge from a reference textual\ndatabase, which enables them to act as a natu-\nral language layer between a user and textual\ndatabases, reducing the risk of hallucinations.\nEvaluating RAG architectures is, however, chal-\nlenging because there are several dimensions to\nconsider: the ability of the retrieval system to\nidentify relevant and focused context passages,\nthe ability of the LLM to exploit such passages\nin a faithful way, or the quality of the genera-\ntion itself. With Ragas, we put forward a suite\nof metrics which can be used to evaluate these\ndifferent dimensions without having to rely on\nground truth human annotations. We posit that\nsuch a framework can crucially contribute to\nfaster evaluation cycles of RAG architectures,\nwhich is especially important given the fast\nadoption of LLMs.\n\n## METHODOLOGY\nperforms well, the need to access the hidden states\nof the model makes it unsuitable for systems that\naccess LLMs through an API.\nFor models that do not provide access to token\nprobabilities, such as ChatGPT and GPT-4, differ-\nent methods are needed. SelfCheckGPT (Manakul\net al., 2023) addresses this problem by instead sam-\npling multiple answers. Their core idea is that\nfactual answers are more stable: when an answer is\nfactual, we can expect that different samples will\ntend to be semantically similar, whereas this is less\nlikely to be the case for hallucinated answers.\nAutomated evaluation of text generation systems\nLLMs have also been leveraged to automatically\nevaluate other aspects of generated text fragments,\nbeyond factuality. For instance, GPTScore (Fu\net al., 2023) uses a prompt that specifies the consid-\nered aspect (e.g. fluency) and then scores passages\nbased on the average probability of the generated\ntokens, according to a given autoregressive LM.\nThis idea of using prompts was previously also\nconsidered by Yuan et al. (2021), although they\nused a smaller fine-tuned LM (i.e. BART) and did\nnot observe a clear benefit from using prompts. An-\nother approach directly asks ChatGPT to evaluate\na particular aspect of the given answer by provid-\ning a score between 0 and 100, or by providing a\nrating on a 5-star scale (Wang et al., 2023a). Re-\nmarkably, strong results can be obtained in this\nway, although it comes with the limitation of being\nsensitive to the design of the prompt. Rather than\nscoring individual answers, some authors have also\nfocused on using an LLM to select the best answer\namong a number of candidates (Wang et al., 2023b),\ntypically to compare the performance of different\nLLMs. However, care is needed with this approach,\nas the order in which the answers is presented can\ninfluence the result (Wang et al., 2023b).\nIn terms of how ground truth answers or, more\ngenerally, generations, have been typically used\nin the literature, most approaches have relied on\nthe availability of one or more reference answers.\nFor instance, BERTScore (Zhang et al., 2020)\nand MoverScore (Zhao et al., 2019) use contex-\ntualised embeddings, produced by a pre-trained\nBERT model, to compare the similarity between\nthe generated answer and the reference answers.\nBARTScore (Yuan et al., 2021) similarly uses refer-\nence answers to compute aspects such as precision\n(estimated as the probability of generating the gen-\nerated answer given the reference) and recall (esti-\nmated as the probability of generating the reference\ngiven the generated answer).\n\n## RESULTS\nof Retrieval Augmented Generation\nShahul Es†, Jithin James †, Luis Espinosa-Anke ∗♢, Steven Schockaert ∗\n†Exploding Gradients\n∗CardiffNLP, Cardiff University, United Kingdom\n♢AMPLYFI, United Kingdom\nshahules786@gmail.com,jamesjithin97@gmail.com\n{espinosa-ankel,schockaerts1}@cardiff.ac.uk\nAbstract\nWe introduce Ragas (Retrieval Augmented\nGeneration Assessment), a framework for\nreference-free evaluation of Retrieval Aug-\nmented Generation (RAG) pipelines. RAG\nsystems are composed of a retrieval and an\nLLM based generation module, and provide\nLLMs with knowledge from a reference textual\ndatabase, which enables them to act as a natu-\nral language layer between a user and textual\ndatabases, reducing the risk of hallucinations.\nEvaluating RAG architectures is, however, chal-\nlenging because there are several dimensions to\nconsider: the ability of the retrieval system to\nidentify relevant and focused context passages,\nthe ability of the LLM to exploit such passages\nin a faithful way, or the quality of the genera-\ntion itself. With Ragas, we put forward a suite\nof metrics which can be used to evaluate these\ndifferent dimensions without having to rely on\nground truth human annotations. We posit that\nsuch a framework can crucially contribute to\nfaster evaluation cycles of RAG architectures,\nwhich is especially important given the fast\nadoption of LLMs."
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T17:27:06"
+    }
+  ]
+}

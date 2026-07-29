@@ -1,7 +1,255 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
+  "description": "10 case Paper Scout do nhóm thiết kế: routing papers / paper_summary / compare_papers / extract_paper_insights, hỏi lại khi thiếu arxiv_url, và multi-turn carry-over / correction / đổi tool.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_papers_routing",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tìm 5 bài arXiv về retrieval augmented generation evaluation.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "max_results": 5
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_papers_search",
+        "difficulty": "easy",
+        "what_it_tests": "Yêu cầu tìm paper arXiv → gọi papers (không dùng lookup/web); trích max_results=5."
+      }
+    },
+    {
+      "id": "G02_paper_summary_focus",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tóm tắt phần methodology của paper https://arxiv.org/abs/2309.15217v2.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_summary",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2309.15217v2",
+              "focus_area": "methodology"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_paper_summary",
+        "difficulty": "medium",
+        "what_it_tests": "Đã có arXiv URL + yêu cầu methodology → paper_summary (không fetch/paper_text)."
+      }
+    },
+    {
+      "id": "G03_compare_papers",
+      "phase": "B",
+      "suite": "group",
+      "query": "So sánh phương pháp (methodology) của hai paper 2309.15217v2 và 2411.18583v1.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "compare_papers",
+            "args": {
+              "aspect": "methodology"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_compare_papers",
+        "difficulty": "medium",
+        "what_it_tests": "So sánh 2+ paper → compare_papers với aspect=methodology."
+      }
+    },
+    {
+      "id": "G04_extract_insights",
+      "phase": "B",
+      "suite": "group",
+      "query": "Trích xuất contributions và limitations từ paper https://arxiv.org/abs/2309.15217v2.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "extract_paper_insights",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2309.15217v2",
+              "insights_needed": ["contributions", "limitations"]
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_extract_insights",
+        "difficulty": "medium",
+        "what_it_tests": "Trích insights có cấu trúc → extract_paper_insights với đúng insights_needed."
+      }
+    },
+    {
+      "id": "G05_missing_arxiv_url",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tóm tắt phần results của bài paper này giúp mình.",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "clarify_missing_arxiv_url",
+        "difficulty": "medium",
+        "what_it_tests": "Nói 'bài paper này' nhưng không có URL/ID → clarify, không đoán paper_summary."
+      }
+    },
+    {
+      "id": "G06_clarify_then_summary",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt methodology của bài paper này giúp mình."},
+        {"role": "user", "content": "https://arxiv.org/abs/2309.15217v2"},
+        {"role": "user", "content": "Chỉ tập trung methodology, bản tóm tắt chi tiết nhé."}
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_summary",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2309.15217v2",
+              "focus_area": "methodology",
+              "length": "detailed"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_clarify_then_paper_summary",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: sau khi có URL, latest turn yêu cầu methodology chi tiết → paper_summary đúng args."
+      }
+    },
+    {
+      "id": "G07_scout_then_summarize",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm 3 paper arXiv về RAG evaluation."},
+        {"role": "user", "content": "Paper Ragas là paper nào trong danh sách?"},
+        {"role": "user", "content": "Tóm tắt method và results của https://arxiv.org/abs/2309.15217v2."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_summary",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2309.15217v2"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_scout_then_summarize",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: ngữ cảnh tìm paper trước; latest turn tóm tắt paper cụ thể → paper_summary (không gọi papers lại)."
+      }
+    },
+    {
+      "id": "G08_correction_focus_area",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt ngắn paper https://arxiv.org/abs/2309.15217v2."},
+        {"role": "user", "content": "Chi tiết hơn đi."},
+        {"role": "user", "content": "Nhưng chỉ phần results thôi."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_summary",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2309.15217v2",
+              "focus_area": "results",
+              "length": "detailed"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_correction_focus",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: sửa focus sang results + length=detailed theo latest turn."
+      }
+    },
+    {
+      "id": "G09_switch_to_insights",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "So sánh methodology của 2309.15217v2 và 2411.18583v1."},
+        {"role": "user", "content": "Thôi không so sánh nữa."},
+        {"role": "user", "content": "Chỉ trích limitations của paper 2309.15217v2 thôi."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "extract_paper_insights",
+            "args": {
+              "arxiv_url": "2309.15217v2",
+              "insights_needed": ["limitations"]
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_switch_tool",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: bỏ compare, chuyển sang extract_paper_insights chỉ limitations cho một paper."
+      }
+    },
+    {
+      "id": "G10_correction_max_results",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm 10 paper về transformer efficiency trên arXiv."},
+        {"role": "user", "content": "Cho mình 3 thôi."},
+        {"role": "user", "content": "Vẫn chủ đề transformer efficiency nhé."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "max_results": 3
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_arg_correction",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: carry chủ đề transformer efficiency, sửa max_results 10→3."
+      }
+    }
+  ]
 }
